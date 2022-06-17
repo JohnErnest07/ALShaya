@@ -31,6 +31,7 @@ public class Steps {
 
 	private static Response response;
 	private static Response authresponse;
+	private static Response paramresponse;
 	private static String jsonString;
 	private static String bookid;
 	private static String tokenvalue;
@@ -80,7 +81,7 @@ public class Steps {
     
     }
     @Given("User enters valid booking details")
-    
+   
     public void Userentersvalidbookingdetails() {
     	
     	
@@ -152,4 +153,34 @@ public class Steps {
     	
     }
 	
+    
+    @When("DeleteBooking API is called")
+    
+    
+    public void DeleteBookingAPIiscalled() {
+    	
+    	RestAssured.baseURI = BaseURL;
+		RequestSpecification paramrequest = RestAssured.given();
+			paramrequest.header("Accept", "application/json")
+			       .header("Content-Type", "application/json")
+			       .queryParam("firstname","Johne")
+			       .queryParam("Lastname", "Ernest");
+			
+			System.out.println(" Param request "+ paramrequest.log().all());
+			
+			paramresponse = paramrequest.get();
+			
+			
+			String jsonString2 = paramresponse.asString();
+	    	System.out.println(jsonString2.toString());
+			
+			
+    	
+    }
+    
+    @Then("Booking is deleted successfully")
+    
+    public void Bookingisdeletedsuccessfully() {
+    	
+    }
 }
